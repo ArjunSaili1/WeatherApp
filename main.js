@@ -110,13 +110,23 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
 
 /***/ }),
 
+/***/ "./src/conversionHelpers.js":
+/*!**********************************!*\
+  !*** ./src/conversionHelpers.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"convertToCel\": () => (/* binding */ convertToCel),\n/* harmony export */   \"convertToFar\": () => (/* binding */ convertToFar)\n/* harmony export */ });\n\nfunction convertToCel(temp){\n    return(Math.round((temp - 273.15) * 10) / 10);\n}\n\nfunction convertToFar(temp){\n    return(Math.round(((temp - 273.15) * (9/5) + 32)*10)/10)\n}\n\n//# sourceURL=webpack://weatherapp/./src/conversionHelpers.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ \"./src/styles.css\");\n\n\nasync function getFromAPI (query){\n    try{\n        const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${query}&APPID=61bb2b80801cd04a22d0fb4a48c2acd4`);\n        const responseJson = await response.json();\n        formatJson(responseJson);   \n    }\n    catch{\n        console.log(\"error\");\n    }\n}\n\nfunction formatJson(jsonWeather){\n    console.log(jsonWeather);\n    const weather = {\n        status: jsonWeather.weather[0].main,\n        description: jsonWeather.weather[0].description,\n        name: jsonWeather.name,\n        country: jsonWeather.sys.country,\n        celsius: {},\n        fahrenheit: {}\n    };\n    for(const key in jsonWeather.main){\n        if(key !== \"pressure\" && key !== \"humidity\"){\n            weather.celsius[key] = convertToCel(jsonWeather.main[key]);\n            weather.fahrenheit[key] = convertToFar(jsonWeather.main[key]);\n        }\n        else{\n            weather.celsius[key] = jsonWeather.main[key];\n            weather.fahrenheit[key] = jsonWeather.main[key];\n        }\n    }\n\n    console.log(weather);\n}\n\nfunction convertToCel(temp){\n    return(Math.round((temp - 273.15) * 10) / 10);\n}\n\nfunction convertToFar(temp){\n    return(Math.round(((temp - 273.15) * (9/5) + 32)*10)/10)\n}\n\n\ngetFromAPI(\"dvfdfdfv\");\n\n//# sourceURL=webpack://weatherapp/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ \"./src/styles.css\");\n/* harmony import */ var _conversionHelpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./conversionHelpers */ \"./src/conversionHelpers.js\");\n\n\n\n\nconst apiLogic = (()=>{\n\n    function getFromAPI(query){\n        return(searchAPI(query).then())\n    }\n    async function searchAPI (query){\n        try{\n            const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${query}&APPID=61bb2b80801cd04a22d0fb4a48c2acd4`);\n            const responseJson = await response.json();\n            return formatJson(responseJson);   \n        }\n        catch{\n            console.log(\"error\");\n        }\n    }\n    \n    function formatJson(jsonWeather){\n        const weather = {\n            status: jsonWeather.weather[0].main,\n            description: jsonWeather.weather[0].description,\n            name: jsonWeather.name,\n            country: jsonWeather.sys.country,\n            celsius: {},\n            fahrenheit: {}\n        };\n        for(const key in jsonWeather.main){\n            if(key !== \"pressure\" && key !== \"humidity\"){\n                weather.celsius[key] = (0,_conversionHelpers__WEBPACK_IMPORTED_MODULE_1__.convertToCel)(jsonWeather.main[key]);\n                weather.fahrenheit[key] = (0,_conversionHelpers__WEBPACK_IMPORTED_MODULE_1__.convertToFar)(jsonWeather.main[key]);\n            }\n            else{\n                weather.celsius[key] = jsonWeather.main[key];\n                weather.fahrenheit[key] = jsonWeather.main[key];\n            }\n        }\n        return(weather);\n    }\n    return{ getFromAPI }    \n})();\n\napiLogic.getFromAPI(\"Hamilton\").then(function(response){console.log(response)});\n\n//# sourceURL=webpack://weatherapp/./src/index.js?");
 
 /***/ })
 
