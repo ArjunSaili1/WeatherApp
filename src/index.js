@@ -1,7 +1,7 @@
 import './styles.css';
 import { convertToCel, convertToFar } from "./conversionHelpers";
 
-const apiLogic = (()=>{
+export const apiLogic = (()=>{
 
     function getFromAPI(query){
         return(searchAPI(query).then())
