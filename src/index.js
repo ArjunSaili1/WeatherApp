@@ -10,12 +10,19 @@ const displayControl = (()=>{
 
     async function submitLocation(e){
         e.preventDefault();
+        const error = document.querySelector(".error");
         if (inputField.value){
             const weatherObj = await apiLogic.searchAPI(inputField.value);
             console.log(weatherObj)
             if(weatherObj){
                 createDisplay(weatherObj, "fahrenheit");
             }
+            else{
+                error.textContent = "Location Not Found. Please Try Again";
+            }
+        }
+        else{
+            error.textContent = "Please enter a location.";
         }
     }
 
@@ -25,7 +32,10 @@ const displayControl = (()=>{
         const weatherContainer = document.querySelector(".weather-container");
         weatherContainer.style.display = 'unset';
         const locationText = document.querySelector(".location-text");
-        locationText.textContent = weatherObj.name + ", " + weatherObj.country;
+        locationText.textContent = weatherObj.name;
+        if(weatherObj.country){
+            locationText.textContent += ", " + weatherObj.country;
+        }
         const weatherStatus = document.querySelector(".weather-text");
         weatherStatus.textContent = weatherObj.status + "|" + weatherObj[unit].temp;
         setBackground(weatherObj.status);
@@ -50,6 +60,7 @@ const displayControl = (()=>{
         minTemp.textContent = weatherObj[unit].temp_min;
         minTemp.appendChild(tempSymbol.cloneNode(true));
     }
+
 
     function setBackground(status){
         const background = document.querySelector("#background");
