@@ -7,10 +7,37 @@
     <title>Weather App</title>
 </head>
 <body>
-    <form class="location-form">
-        <input class="location-field" type="text">
-        <button type="submit">Submit</button>
-    </form>
-    <script src="main.js" defer></script>
+    <div class='monospace'>
+        <div class='title'>WhatIsTheWeather.io</div>
+        <div class='center'>
+            <form class="location-form">
+                <input class="location-field" type="text" placeholder="Where are you?">
+                <div><button class='submit-location-form' type="submit">Check</button></div>
+            </form>
+            <div class='weather-container'>
+                <div class='location-text'></div>
+                <span class='weather-text'></span>
+                <div class="detail-weather-info">
+                    <span class='weather-info-item'>
+                        <span>Feels Like</span>
+                        <span class='feels-like'></span>
+                    </span>
+                    <span class='weather-info-item'>
+                        <span>Pressure</span>
+                        <span class='pressure'>0</span>
+                    </span>
+                    <span class='weather-info-item'>
+                        <span>Max Temp</span>
+                        <span class='max-temp'>0</span>
+                    </span>
+                    <span class='weather-info-item'>
+                        <span>Min Temp</span>
+                        <span class='min-temp'>0</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
