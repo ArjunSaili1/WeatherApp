@@ -12,8 +12,9 @@ const displayControl = (()=>{
         e.preventDefault();
         if (inputField.value){
             const weatherObj = await apiLogic.searchAPI(inputField.value);
+            console.log(weatherObj)
             if(weatherObj){
-                createDisplay(weatherObj, "celsius");
+                createDisplay(weatherObj, "fahrenheit");
             }
         }
     }
@@ -26,22 +27,33 @@ const displayControl = (()=>{
         const locationText = document.querySelector(".location-text");
         locationText.textContent = weatherObj.name + ", " + weatherObj.country;
         const weatherStatus = document.querySelector(".weather-text");
-        weatherStatus.textContent = weatherObj.status + "|" + weatherObj.unit.temp;
+        weatherStatus.textContent = weatherObj.status + "|" + weatherObj[unit].temp;
+        setBackground(weatherObj.status);
         const tempSymbol = document.createElement("sup");
         tempSymbol.classList.add("temp-unit");
-        tempSymbol.textContent = "°C";
+        if(unit == "celsius"){
+            tempSymbol.textContent = "°C";
+        }
+        else{
+            tempSymbol.textContent = "°F"
+        }
         weatherStatus.appendChild(tempSymbol);
         const feelsLike = document.querySelector(".feels-like");
-        feelsLike.textContent = weatherObj.unit.feels_like;
+        feelsLike.textContent = weatherObj[unit].feels_like;
         feelsLike.appendChild(tempSymbol.cloneNode(true));
         const pressure = document.querySelector(".pressure");
-        pressure.textContent = weatherObj.unit.pressure + " hPa";
+        pressure.textContent = weatherObj[unit].pressure + " hPa";
         const maxTemp = document.querySelector(".max-temp");
-        maxTemp.textContent = weatherObj.unit.temp_max;
+        maxTemp.textContent = weatherObj[unit].temp_max;
         maxTemp.appendChild(tempSymbol.cloneNode(true));
         const minTemp = document.querySelector(".min-temp");
-        minTemp.textContent = weatherObj.unit.temp_min;
+        minTemp.textContent = weatherObj[unit].temp_min;
         minTemp.appendChild(tempSymbol.cloneNode(true));
+    }
+
+    function setBackground(status){
+        const background = document.querySelector("#background");
+        background.classList = status.toLowerCase();
     }
     return{ initApp }    
 })();
