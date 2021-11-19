@@ -5,7 +5,7 @@ export const apiLogic = (()=>{
 
     async function searchAPI (query){
         try{
-            const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${query}&APPID=61bb2b80801cd04a22d0fb4a48c2acd4`);
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${query}&APPID=61bb2b80801cd04a22d0fb4a48c2acd4`);
             const responseJson = await response.json();
             return formatJson(responseJson);   
         }
