@@ -41,8 +41,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100%;
     width: 100vw;
+    position: absolute;
     font-family: monospace;
 }
 
@@ -63,6 +64,10 @@
     align-items: center;
     flex-direction: column;
     gap: 18px;
+}
+
+#background{
+    height: 100%;
 }
 
 .location-field{
